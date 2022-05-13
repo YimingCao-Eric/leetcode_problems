@@ -1,0 +1,56 @@
+class Solution(object):
+    def intToRoman(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        
+        dic=[0,0,0,0,0,0,0]
+        sy=['M','D','C','L','X','V','I']
+        
+        temp=0
+        dic[0]=num//1000
+        
+        temp=num%1000
+        if temp/900<1:
+            dic[1]=temp//500
+        else:
+            dic[1]=9
+            dic[2]-=4
+        
+        temp=temp%500
+        dic[2]+=temp//100
+        
+        temp=temp%100
+        if temp/90<1:
+            dic[3]=temp//50
+        else:
+            dic[3]=9
+            dic[4]-=4
+            
+        temp=temp%50       
+        dic[4]+=temp//10
+        
+        temp=temp%10
+        if temp/9<1:          
+            dic[5]=temp//5
+        else:
+            dic[5]=9
+            dic[6]-=4
+        
+        dic[6]+=temp%5
+        
+        st=''
+        
+        for k in range(7):
+            if dic[k]==4:
+                st+=sy[k]
+                st+=sy[k-1]
+            elif dic[k]==9:
+                st+=sy[k+1]
+                st+=sy[k-1]
+            else:
+                for i in range(dic[k]):
+                    st+=sy[k]
+            
+        return st
