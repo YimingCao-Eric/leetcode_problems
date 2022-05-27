@@ -1,0 +1,22 @@
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        
+        # create a function that returns the longest palindrome, the centre part starts at st and ends at en 
+        def helper(st,en):
+            while st>=0 and en<len(s) and s[st]==s[en]:
+                st-=1
+                en+=1
+            return s[st+1:en]
+        
+        # for each char in s, as the centre part of palindrome, find the longest one
+        pal=''      
+        for i in range(len(s)):
+            pal_odd=helper(i,i)
+            pal_even=helper(i,i+1)
+            pal=max([pal,pal_odd,pal_even],key=lambda x: len(x))
+                              
+        return pal 
