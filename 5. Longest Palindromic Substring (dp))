@@ -1,0 +1,37 @@
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        # dynamic programing
+        le=len(s)
+        
+        # create a boolean matrix, value (i,j) represent if the substring of s is a palindrome
+        # eg. s='abcdef',(3,5)=False represent 'def' is not a palindrome
+        dp=[[0]*le for _ in range(le)]
+        
+        # set all diagonal values to True, b/c single char is a palindrome
+        for i in range(le):
+            dp[i][i]=True
+            
+            
+        st=0
+        en=0
+        
+        # check only the right side of the matrix, b/c (1,2) and (2,1) represent the same substring
+        for i in range(le-2,-1,-1):
+            for j in range(i+1,le):
+                
+                # check if the first char is equal to the last char of substring and if the mid is a palindrome
+                # j-i==1 is the base condition of even palindrome 
+                if s[i]==s[j] and (j-i==1 or dp[i+1][j-1]):
+                    dp[i][j]=True
+                    
+                    # find the longest palindrome
+                    if (j-i)>(en-st):
+                        st=i
+                        en=j
+                              
+        
+        return s[st:en+1]
